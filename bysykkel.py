@@ -76,19 +76,6 @@ class Bysykkelviser():
         else:
             print("\nIngen stativer med navn '" + query + "' funnet.")    
         
-        
-    # def show_availability(self, query=""):
-    #     query = query.lower()
-    #     self.build_view_data()
-    #     print(query)
-    #     if any(query in station["name"].lower() for station in self.all_data.values()):
-    #         print("\n{:<30}{:<15}{:<15}".format("STATIVNAVN","RETURPLASSER","LEDIGE SYKLER"))
-    #         for idno, data in self.all_data.items():
-    #             if query in data["name"].lower():
-    #                 print("{:<30}{:<15}{:<15}".format(data["name"], data["docks"], data["bikes"]))
-    #     else:
-    #         print("\nIngen stativer med navn '" + query + "' funnet.")    
-        
 
     def run(self):
         print("\nOSLO BYSYKKEL - Finn stativer med ledige sykler og returplasser")
