@@ -85,14 +85,14 @@ class Bysykkelviser():
             print("1. Søk etter sykkelstativ")
             print("2. Vis status for alle sykkelstativer")
             print("0. Avslutt")
-            inp = input("\nDitt valg: ")
+            inp = input("\nSkriv 1, 2 eller 0 og trykk enter: ")
             if inp == "1":
                 query = input("Skriv stativnavn: ")
                 self.show_availability(query)
             elif inp == "2":
                 self.show_availability()
             else:
-                print("\nVelg 1, 2 eller 0 for å avslutte")
+                print("\nMenyvalget finnes ikke. Prøv på nytt.")
 
         print("\nAvslutter... Velkommen igjen!\n")
 
