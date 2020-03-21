@@ -1,6 +1,4 @@
-
 import requests
-from collections import OrderedDict
 import sys
 
 class Bysykkelviser():
@@ -57,22 +55,32 @@ class Bysykkelviser():
                 docks = station["num_docks_available"]
                 bikes = station["num_bikes_available"]
                 self.all_data[idno] = {"name": name, "docks": docks, "bikes": bikes}
-        self.all_data = OrderedDict(sorted(self.all_data.items(), key = lambda x: x[1]["name"]))
 
-    def get_search_results(self,query):
+    def get_station_from_id(self, station_id):
+        self.build_view_data()
+        result = {}
+        if station_id in self.all_data:
+            result = self.all_data[station_id]
+            result["id"] = station_id
+        
+        return result
+        
+    def get_search_results(self, query):
+        self.build_view_data()
         results = []     
         for idno, data in self.all_data.items():
             if query.lower() in data["name"].lower():
-                results.append((data["name"], data["docks"], data["bikes"]))
+                results.append({"id": idno, "name": data["name"], "docks": data["docks"], "bikes": data["bikes"]})
+        results = sorted(results, key = lambda i: i["name"])
+
         return results
         
     def show_availability(self, query=""):
-        self.build_view_data()
         results = self.get_search_results(query)
         if len(results) > 0:
             print("\n{:<30}{:<15}{:<15}".format("STATIVNAVN","RETURPLASSER","LEDIGE SYKLER"))
             for result in results:
-                print("{:<30}{:<15}{:<15}".format(result[0],result[1],result[2]))
+                print("{:<30}{:<15}{:<15}".format(result["name"],result["docks"],result["bikes"]))
         else:
             print("\nIngen stativer med navn '" + query + "' funnet.")    
         
@@ -91,10 +99,10 @@ class Bysykkelviser():
                 self.show_availability(query)
             elif inp == "2":
                 self.show_availability()
+            elif inp == "0":
+                print("\nAvslutter... Velkommen igjen!\n")        
             else:
                 print("\nMenyvalget finnes ikke. Prøv på nytt.")
-
-        print("\nAvslutter... Velkommen igjen!\n")
 
 if __name__ == "__main__":
     app = Bysykkelviser()
